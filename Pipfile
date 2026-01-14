@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "==1.23.5"
+pandas = "==2.1.4"
+matplotlib = "==3.7.3"
+scikit-learn = "==1.5.0"
+tensorflow = "==2.16.1"
+flask = "==3.0.3"
+flask_cors = "==6.0.1"
+requests = "==2.32.3"
+xmltodict = "==0.13.0"
+selenium = "==4.15.2"
+openpyxl = "==3.1.2"
+google-genai = "==1.46.0"
+googletrans = "==4.0.2"
+oracledb = "==3.4.0"
+easyocr = "==1.7.2"
+python-dotenv = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
+python_full_version = "3.9.13"
