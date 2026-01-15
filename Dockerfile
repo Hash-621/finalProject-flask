@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 5000
 
 # 6. 실행 명령어 (app.py 실행)
-CMD ["python", "mat_server.py"]
+CMD ["python", "mat_server.py"] 
