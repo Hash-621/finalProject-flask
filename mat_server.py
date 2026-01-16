@@ -12,8 +12,14 @@ port = os.getenv('SERVER_PORT')
 model_path = os.getenv('MODEL_PATH')
 img_path = os.getenv('IMG_PATH')
 
-model = tf.keras.models.load_model(model_path)
-
+# 모델 로드
+print(f"모델 로딩 중... 경로: {model_path}")
+try:
+    model = tf.keras.models.load_model(model_path)
+    print("모델 로딩 완료!")
+except Exception as e:
+    print(f"❌ 모델 로딩 실패: {e}")
+    # 모델이 없으면 서버가 켜져도 의미 없으므로 여기서 확인 필요
 
 
 def prepare_img(image):
@@ -26,11 +32,17 @@ app = Flask(__name__)
 CORS(app)
 @app.route('/predict' , methods=['POST'])
 def predict():
+ # 1. 파일 키 확인
     if 'file' not in request.files:
-        return jsonify({'error': '이미지 파일이 없습니다.'}), 400
+        print("❌ 요청에 'file' 키가 없습니다.")
+        return jsonify({'error': '이미지 파일 키(file)가 없습니다.'}), 400
 
     file = request.files['file']
     try:
+        # [핵심] 저장할 폴더가 없으면 생성 (Docker 에러 방지)
+        if not os.path.exists(img_path):
+            os.makedirs(img_path)
+            print(f"📂 폴더 생성됨: {img_path}")
         # 파일 읽기
         file.save(img_path+file.filename)
         image = tf.keras.utils.load_img(img_path+file.filename)
